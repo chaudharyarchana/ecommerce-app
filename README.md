@@ -39,14 +39,13 @@ A basic e-commerce web application built with React, TypeScript, and Tailwind CS
    git clone https://github.com/chaudharyarchana/ecommerce-app.git
   
 
-2. Install dependencies
+2. Go To Repo
+  
+    cd ecommerce-app
+  
+3. Install dependencies
   
    npm install
-  
-
-3. Install Playwright browsers
-  
-   npx playwright install
   
 
 4. Start the development server
