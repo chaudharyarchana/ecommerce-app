@@ -1,9 +1,8 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import useCart from "../hooks/useCart";
 import { CartItem } from "../types";
 
-const CartPage: React.FC = () => {
+const CartPage = () => {
   const {
     cartItems,
     removeFromCart,
@@ -15,8 +14,11 @@ const CartPage: React.FC = () => {
 
   if (cartItems.length === 0) {
     return (
-      <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center pb-24">
-        <div className="text-center">
+      <div className="page-height bg-gray-50 flex flex-col items-center justify-center pb-24 animate-fade-in">
+        <div
+          className="text-center animate-bounce-in opacity-0"
+          style={{ animationFillMode: "forwards" }}
+        >
           <p className="text-6xl mb-4">🛒</p>
           <h2 className="text-2xl font-bold text-gray-800 mb-2">
             Your cart is empty
@@ -24,28 +26,37 @@ const CartPage: React.FC = () => {
           <p className="text-gray-500 mb-6">
             Looks like you haven't added anything yet
           </p>
-          <Link
-            to="/"
-            className="bg-indigo-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-indigo-700 transition"
+
+          <button
+            onClick={() => navigate("/")}
+            className="flex items-center gap-1 text-indigo-600 hover:text-indigo-800 mb-6 transition-all duration-200 hover:-translate-x-1"
           >
-            Continue Shopping
-          </Link>
+            <span
+              style={{ transform: "translateY(-4px)", display: "inline-block" }}
+            >
+              ←
+            </span>
+            <span>Continue Shopping</span>
+          </button>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-24">
+    <div className="page-height bg-gray-50 pb-24 animate-fade-in">
       <div className="max-w-3xl mx-auto px-4 py-8">
         {/* Header */}
-        <div className="flex items-center justify-between mb-6">
+        <div
+          className="flex items-center justify-between mb-6 animate-fade-in opacity-0"
+          style={{ animationFillMode: "forwards" }}
+        >
           <h1 className="text-2xl font-bold text-gray-800">
             My Cart ({totalItems} items)
           </h1>
           <Link
             to="/"
-            className="text-indigo-600 hover:text-indigo-800 text-sm transition"
+            className="text-indigo-600 hover:text-indigo-800 text-sm transition-all duration-200 hover:-translate-x-1"
           >
             ← Continue Shopping
           </Link>
@@ -53,17 +64,21 @@ const CartPage: React.FC = () => {
 
         {/* Cart items */}
         <div className="flex flex-col gap-4">
-          {cartItems.map((item: CartItem) => (
+          {cartItems.map((item: CartItem, index: number) => (
             <div
               key={item.id}
-              className="bg-white rounded-2xl shadow-sm p-4 flex gap-4 items-center border border-gray-100"
+              className="bg-white rounded-2xl shadow-sm p-4 flex gap-4 items-center border border-gray-100 animate-slide-in opacity-0 hover:shadow-md transition-shadow duration-200"
+              style={{
+                animationDelay: `${index * 0.1}s`,
+                animationFillMode: "forwards",
+              }}
             >
               {/* Image */}
               <div className="w-20 h-20 flex-shrink-0 flex items-center justify-center">
                 <img
                   src={item.image}
                   alt={item.title}
-                  className="max-h-full max-w-full object-contain"
+                  className="max-h-full max-w-full object-contain transition-transform duration-300 hover:scale-110"
                 />
               </div>
 
@@ -83,7 +98,7 @@ const CartPage: React.FC = () => {
                 <div className="flex items-center gap-2 mt-2">
                   <button
                     onClick={() => decreaseQuantity(item.id)}
-                    className="w-7 h-7 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 hover:bg-gray-100 transition font-bold"
+                    className="w-7 h-7 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 hover:bg-red-100 hover:border-red-300 hover:scale-110 transition-all duration-200 font-bold"
                   >
                     −
                   </button>
@@ -92,7 +107,7 @@ const CartPage: React.FC = () => {
                   </span>
                   <button
                     onClick={() => increaseQuantity(item.id)}
-                    className="w-7 h-7 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 hover:bg-gray-100 transition font-bold"
+                    className="w-7 h-7 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 hover:bg-green-100 hover:border-green-300 hover:scale-110 transition-all duration-200 font-bold"
                   >
                     +
                   </button>
@@ -106,7 +121,7 @@ const CartPage: React.FC = () => {
               <button
                 data-cy="remove-from-cart"
                 onClick={() => removeFromCart(item.id)}
-                className="flex-shrink-0 text-red-400 hover:text-red-600 hover:bg-red-50 p-2 rounded-lg transition-all duration-200"
+                className="flex-shrink-0 text-red-400 hover:text-red-600 hover:bg-red-50 p-2 rounded-lg transition-all duration-200 hover:scale-110 active:scale-95"
               >
                 🗑️
               </button>
@@ -115,7 +130,13 @@ const CartPage: React.FC = () => {
         </div>
 
         {/* Order summary */}
-        <div className="mt-6 bg-white rounded-2xl shadow-sm p-6 border border-gray-100">
+        <div
+          className="mt-6 bg-white rounded-2xl shadow-sm p-6 border border-gray-100 animate-fade-in opacity-0"
+          style={{
+            animationDelay: `${cartItems.length * 0.1}s`,
+            animationFillMode: "forwards",
+          }}
+        >
           <h2 className="text-lg font-bold text-gray-800 mb-4">
             Order Summary
           </h2>
@@ -134,7 +155,7 @@ const CartPage: React.FC = () => {
             </div>
           </div>
 
-          <button className="mt-4 w-full bg-indigo-600 text-white py-3 rounded-xl font-semibold hover:bg-indigo-700 transition-all duration-200 active:scale-95">
+          <button className="mt-4 w-full bg-indigo-600 text-white py-3 rounded-xl font-semibold hover:bg-indigo-700 hover:-translate-y-1 hover:scale-105 transition-all duration-200 active:scale-95">
             Checkout
           </button>
         </div>

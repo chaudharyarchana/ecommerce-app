@@ -61,39 +61,58 @@ const ProductDetailPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-24">
+    <div className="page-height bg-gray-50 pb-24 animate-fade-in">
       <div className="max-w-4xl mx-auto px-4 py-8">
         {/* Back button */}
         <button
           onClick={() => navigate(-1)}
-          className="flex items-center gap-2 text-indigo-600 hover:text-indigo-800 mb-6 transition"
+          className="flex items-center gap-1 text-indigo-600 hover:text-indigo-800 mb-6 transition-all duration-200 hover:-translate-x-1"
         >
-          ← Back
+          <span
+            style={{ transform: "translateY(-2px)", display: "inline-block" }}
+          >
+            ←
+          </span>
+          <span>Back</span>
         </button>
 
         {/* Product card */}
-        <div className="bg-white rounded-2xl shadow-md p-6 md:p-10 flex flex-col md:flex-row gap-8">
+        <div
+          className="bg-white rounded-2xl shadow-md p-6 md:p-10 flex flex-col md:flex-row gap-8 animate-bounce-in opacity-0"
+          style={{ animationFillMode: "forwards" }}
+        >
           {/* Image */}
           <div className="flex-shrink-0 flex items-center justify-center w-full md:w-64 h-64">
             <img
               src={product.image}
               alt={product.title}
-              className="max-h-full max-w-full object-contain"
+              className="max-h-full max-w-full object-contain transition-transform duration-500 hover:scale-110 hover:rotate-2"
             />
           </div>
 
           {/* Details */}
           <div className="flex flex-col gap-4 flex-1">
             {/* Category */}
-            <span className="text-xs text-gray-400 uppercase tracking-wide capitalize">
+            <span
+              className="text-xs text-gray-400 uppercase tracking-wide capitalize animate-fade-in opacity-0"
+              style={{ animationDelay: "0.1s", animationFillMode: "forwards" }}
+            >
               {product.category}
             </span>
 
             {/* Title */}
-            <h1 className="text-xl font-bold text-gray-800">{product.title}</h1>
+            <h1
+              className="text-xl font-bold text-gray-800 animate-fade-in opacity-0"
+              style={{ animationDelay: "0.2s", animationFillMode: "forwards" }}
+            >
+              {product.title}
+            </h1>
 
             {/* Rating */}
-            <div className="flex items-center gap-2">
+            <div
+              className="flex items-center gap-2 animate-fade-in opacity-0"
+              style={{ animationDelay: "0.3s", animationFillMode: "forwards" }}
+            >
               <span className="text-yellow-400 text-sm">
                 ⭐ {product.rating.rate}
               </span>
@@ -103,58 +122,66 @@ const ProductDetailPage = () => {
             </div>
 
             {/* Price */}
-            <p className="text-2xl font-bold text-indigo-600">
+            <p
+              className="text-2xl font-bold text-indigo-600 animate-fade-in opacity-0"
+              style={{ animationDelay: "0.4s", animationFillMode: "forwards" }}
+            >
               ${product.price.toFixed(2)}
             </p>
 
             {/* Description */}
-            <p className="text-gray-600 text-sm leading-relaxed">
+            <p
+              className="text-gray-600 text-sm leading-relaxed animate-fade-in opacity-0"
+              style={{ animationDelay: "0.5s", animationFillMode: "forwards" }}
+            >
               {product.description}
             </p>
 
             {/* Add to cart / Quantity controls */}
-            {!isInCart ? (
-              <button
-                data-cy="add-to-cart"
-                onClick={handleAddToCart}
-                className={`mt-auto w-full md:w-auto px-8 py-3 rounded-xl font-semibold text-white transition-all duration-300 ${
-                  added
-                    ? "bg-green-500 scale-95"
-                    : "bg-indigo-600 hover:bg-indigo-700 active:scale-95"
-                }`}
-              >
-                {added ? "✓ Added to Cart!" : "Add to Cart"}
-              </button>
-            ) : (
-              <div className="mt-auto flex items-center gap-4">
-                {/* Quantity controls */}
-                <div className="flex items-center gap-3 bg-gray-100 rounded-xl px-4 py-2">
+            <div
+              className="animate-fade-in opacity-0"
+              style={{ animationDelay: "0.6s", animationFillMode: "forwards" }}
+            >
+              {!isInCart || added ? (
+                <button
+                  data-cy="add-to-cart"
+                  onClick={handleAddToCart}
+                  className={`mt-auto w-full md:w-auto px-8 py-3 rounded-xl font-semibold text-white transition-all duration-300 ${
+                    added
+                      ? "bg-green-500 animate-scale-up"
+                      : "bg-indigo-600 hover:bg-indigo-700 hover:-translate-y-1 hover:scale-105 active:scale-95"
+                  }`}
+                >
+                  {added ? "✓ Added to Cart!" : "Add to Cart"}
+                </button>
+              ) : (
+                <div className="mt-auto flex items-center gap-4 animate-fade-in">
+                  <div className="flex items-center gap-3 bg-gray-100 rounded-xl px-4 py-2">
+                    <button
+                      onClick={() => decreaseQuantity(product.id)}
+                      className="w-7 h-7 rounded-full border border-gray-300 bg-white flex items-center justify-center text-gray-600 hover:bg-red-100 hover:border-red-300 hover:scale-110 transition-all duration-200 font-bold"
+                    >
+                      −
+                    </button>
+                    <span className="text-sm font-semibold w-6 text-center">
+                      {cartItem?.quantity}
+                    </span>
+                    <button
+                      onClick={() => increaseQuantity(product.id)}
+                      className="w-7 h-7 rounded-full border border-gray-300 bg-white flex items-center justify-center text-gray-600 hover:bg-green-100 hover:border-green-300 hover:scale-110 transition-all duration-200 font-bold"
+                    >
+                      +
+                    </button>
+                  </div>
                   <button
-                    onClick={() => decreaseQuantity(product.id)}
-                    className="w-7 h-7 rounded-full border border-gray-300 bg-white flex items-center justify-center text-gray-600 hover:bg-gray-200 transition font-bold"
+                    onClick={() => removeFromCart(product.id)}
+                    className="text-red-400 hover:text-red-600 hover:bg-red-50 px-4 py-2 rounded-xl transition-all duration-200 text-sm font-medium hover:scale-105 active:scale-95"
                   >
-                    −
-                  </button>
-                  <span className="text-sm font-semibold w-6 text-center">
-                    {cartItem?.quantity}
-                  </span>
-                  <button
-                    onClick={() => increaseQuantity(product.id)}
-                    className="w-7 h-7 rounded-full border border-gray-300 bg-white flex items-center justify-center text-gray-600 hover:bg-gray-200 transition font-bold"
-                  >
-                    +
+                    🗑️ Remove
                   </button>
                 </div>
-
-                {/* Remove from cart */}
-                <button
-                  onClick={() => removeFromCart(product.id)}
-                  className="text-red-400 hover:text-red-600 hover:bg-red-50 px-4 py-2 rounded-xl transition-all duration-200 text-sm font-medium"
-                >
-                  🗑️ Remove
-                </button>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
       </div>

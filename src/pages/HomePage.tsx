@@ -98,7 +98,7 @@ const HomePage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-20">
+    <div className="page-height bg-gray-50 pb-20">
       {/* Header */}
       <div className="bg-white shadow-sm px-4 py-6">
         <h1 className="text-2xl font-bold text-gray-800 mb-4">All Products</h1>
@@ -114,8 +114,8 @@ const HomePage = () => {
                 onClick={() => handleCategoryChange(cat)}
                 className={`px-3 py-1 rounded-full text-sm font-medium border transition-all duration-200 ${
                   selectedCategories.includes(cat)
-                    ? "bg-indigo-600 text-white border-indigo-600"
-                    : "bg-white text-gray-600 border-gray-300 hover:border-indigo-400"
+                    ? "bg-indigo-600 text-white border-indigo-600 scale-105"
+                    : "bg-white text-gray-600 border-gray-300 hover:border-indigo-400 hover:scale-105"
                 }`}
               >
                 {cat}
@@ -139,7 +139,7 @@ const HomePage = () => {
           {(selectedCategories.length > 0 || sort) && (
             <button
               onClick={clearFilters}
-              className="text-sm text-red-500 hover:text-red-700 underline"
+              className="text-sm text-red-500 hover:text-red-700 underline transition-all duration-200"
             >
               Clear filters
             </button>
@@ -170,8 +170,17 @@ const HomePage = () => {
               gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
             }}
           >
-            {products.map((product) => (
-              <ProductCard key={product.id} product={product} />
+            {products.map((product, index) => (
+              <div
+                key={product.id}
+                className="animate-fade-in opacity-0"
+                style={{
+                  animationDelay: `${index * 0.08}s`,
+                  animationFillMode: "forwards",
+                }}
+              >
+                <ProductCard product={product} />
+              </div>
             ))}
           </div>
         )}
