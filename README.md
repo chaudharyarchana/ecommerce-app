@@ -35,52 +35,51 @@ A basic e-commerce web application built with React, TypeScript, and Tailwind CS
 ### Installation
 
 1. Clone the repository
-   \`\`\`bash
-   git clone https://github.com/yourusername/ecommerce-app.git
-   cd ecommerce-app
-   \`\`\`
+  
+   git clone https://github.com/chaudharyarchana/ecommerce-app.git
+  
 
 2. Install dependencies
-   \`\`\`bash
+  
    npm install
-   \`\`\`
+  
 
 3. Install Playwright browsers
-   \`\`\`bash
+  
    npx playwright install
-   \`\`\`
+  
 
 4. Start the development server
-   \`\`\`bash
+  
    npm start
-   \`\`\`
+  
 
 5. Open your browser at
-   \`\`\`
+  
    http://localhost:3000
-   \`\`\`
+  
 
 ## Running E2E Tests
 
 Make sure the app is running in one terminal:
-\`\`\`bash
+
 npm start
-\`\`\`
+
 
 Then in another terminal run:
-\`\`\`bash
+
 npm run playwright:test
-\`\`\`
+
 
 To see tests running visually:
-\`\`\`bash
+
 npm run playwright:headed
-\`\`\`
+
 
 To view HTML test report:
-\`\`\`bash
+
 npm run playwright:report
-\`\`\`
+
 
 ## Project Structure
 
