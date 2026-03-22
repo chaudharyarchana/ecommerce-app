@@ -13,6 +13,8 @@ export interface CartContextType {
   removeFromCart: (id: number) => void;
   totalItems: number;
   totalValue: number;
+  increaseQuantity: (id: number) => void;
+  decreaseQuantity: (id: number) => void;
 }
 
 export const CartContext = createContext<CartContextType>({
@@ -21,6 +23,8 @@ export const CartContext = createContext<CartContextType>({
   removeFromCart: () => {},
   totalItems: 0,
   totalValue: 0,
+  increaseQuantity: () => {},
+  decreaseQuantity: () => {},
 });
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
@@ -61,9 +65,35 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     0,
   );
 
+  const increaseQuantity = (id: number): void => {
+    setCartItems((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, quantity: item.quantity + 1 } : item,
+      ),
+    );
+  };
+
+  const decreaseQuantity = (id: number): void => {
+    setCartItems((prev) =>
+      prev
+        .map((item) =>
+          item.id === id ? { ...item, quantity: item.quantity - 1 } : item,
+        )
+        .filter((item) => item.quantity > 0),
+    );
+  };
+
   return (
     <CartContext.Provider
-      value={{ cartItems, addToCart, removeFromCart, totalItems, totalValue }}
+      value={{
+        cartItems,
+        addToCart,
+        removeFromCart,
+        totalItems,
+        totalValue,
+        increaseQuantity,
+        decreaseQuantity,
+      }}
     >
       {children}
     </CartContext.Provider>

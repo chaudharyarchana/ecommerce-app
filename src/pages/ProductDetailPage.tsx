@@ -6,7 +6,13 @@ import useCart from "../hooks/useCart";
 const ProductDetailPage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { addToCart, cartItems } = useCart();
+  const {
+    addToCart,
+    removeFromCart,
+    increaseQuantity,
+    decreaseQuantity,
+    cartItems,
+  } = useCart();
 
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -35,7 +41,8 @@ const ProductDetailPage = () => {
     setTimeout(() => setAdded(false), 2000);
   };
 
-  const isInCart = cartItems.some((item) => item.id === Number(id));
+  const cartItem = cartItems.find((item) => item.id === Number(id));
+  const isInCart = Boolean(cartItem);
 
   if (loading) {
     return (
@@ -105,22 +112,49 @@ const ProductDetailPage = () => {
               {product.description}
             </p>
 
-            {/* Add to cart button */}
-            <button
-              data-cy="add-to-cart"
-              onClick={handleAddToCart}
-              className={`mt-auto w-full md:w-auto px-8 py-3 rounded-xl font-semibold text-white transition-all duration-300 ${
-                added
-                  ? "bg-green-500 scale-95"
-                  : "bg-indigo-600 hover:bg-indigo-700 active:scale-95"
-              }`}
-            >
-              {added
-                ? "✓ Added to Cart!"
-                : isInCart
-                  ? "Add More"
-                  : "Add to Cart"}
-            </button>
+            {/* Add to cart / Quantity controls */}
+            {!isInCart ? (
+              <button
+                data-cy="add-to-cart"
+                onClick={handleAddToCart}
+                className={`mt-auto w-full md:w-auto px-8 py-3 rounded-xl font-semibold text-white transition-all duration-300 ${
+                  added
+                    ? "bg-green-500 scale-95"
+                    : "bg-indigo-600 hover:bg-indigo-700 active:scale-95"
+                }`}
+              >
+                {added ? "✓ Added to Cart!" : "Add to Cart"}
+              </button>
+            ) : (
+              <div className="mt-auto flex items-center gap-4">
+                {/* Quantity controls */}
+                <div className="flex items-center gap-3 bg-gray-100 rounded-xl px-4 py-2">
+                  <button
+                    onClick={() => decreaseQuantity(product.id)}
+                    className="w-7 h-7 rounded-full border border-gray-300 bg-white flex items-center justify-center text-gray-600 hover:bg-gray-200 transition font-bold"
+                  >
+                    −
+                  </button>
+                  <span className="text-sm font-semibold w-6 text-center">
+                    {cartItem?.quantity}
+                  </span>
+                  <button
+                    onClick={() => increaseQuantity(product.id)}
+                    className="w-7 h-7 rounded-full border border-gray-300 bg-white flex items-center justify-center text-gray-600 hover:bg-gray-200 transition font-bold"
+                  >
+                    +
+                  </button>
+                </div>
+
+                {/* Remove from cart */}
+                <button
+                  onClick={() => removeFromCart(product.id)}
+                  className="text-red-400 hover:text-red-600 hover:bg-red-50 px-4 py-2 rounded-xl transition-all duration-200 text-sm font-medium"
+                >
+                  🗑️ Remove
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
