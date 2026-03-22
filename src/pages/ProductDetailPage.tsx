@@ -65,6 +65,7 @@ const ProductDetailPage = () => {
       <div className="max-w-4xl mx-auto px-4 py-8">
         {/* Back button */}
         <button
+          data-cy="back-button"
           onClick={() => navigate(-1)}
           className="flex items-center gap-1 text-indigo-600 hover:text-indigo-800 mb-6 transition-all duration-200 hover:-translate-x-1"
         >

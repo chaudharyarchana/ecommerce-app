@@ -36,7 +36,7 @@ test.describe("Product Detail Page", () => {
     await page.goto("/");
     await page.goto("/product/1");
     await page.waitForSelector("[data-cy=add-to-cart]", { timeout: 10000 });
-    await page.getByText("← Back").click();
+    await page.locator("[data-cy=back-button]").click();
     await expect(page).toHaveURL("http://localhost:3000/");
   });
 });
