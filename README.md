@@ -82,31 +82,38 @@ npm run playwright:report
 
 
 ## Project Structure
-
-\`\`\`
-src/
-├── components/
-│ ├── Navbar.tsx
-│ ├── Footer.tsx
-│ └── ProductCard.tsx
-├── context/
-│ └── CartContext.tsx
-├── hooks/
-│ └── useCart.ts
-├── pages/
-│ ├── HomePage.tsx
-│ ├── ProductDetailPage.tsx
-│ └── CartPage.tsx
-├── types/
-│ └── index.ts
-├── App.tsx
-└── index.tsx
-e2e/
-├── home.spec.ts
-├── product.spec.ts
-└── cart.spec.ts
-\`\`\`
-
+```
+ecommerce-app/
+├── public/
+│   ├── index.html
+│   └── manifest.json
+├── src/
+│   ├── components/
+│   │   ├── Navbar.tsx
+│   │   ├── Footer.tsx
+│   │   └── ProductCard.tsx
+│   ├── context/
+│   │   └── CartContext.tsx
+│   ├── hooks/
+│   │   └── useCart.ts
+│   ├── pages/
+│   │   ├── HomePage.tsx
+│   │   ├── ProductDetailPage.tsx
+│   │   └── CartPage.tsx
+│   ├── types/
+│   │   └── index.ts
+│   ├── App.tsx
+│   ├── index.css
+│   └── index.tsx
+├── e2e/
+│   ├── home.spec.ts
+│   ├── product.spec.ts
+│   └── cart.spec.ts
+├── playwright.config.ts
+├── tailwind.config.js
+├── tsconfig.json
+└── package.json
+```
 ## Assumptions & Limitations
 
 - Prices displayed in USD as returned by fakestoreapi.com
