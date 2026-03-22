@@ -15,19 +15,29 @@
     "react-dom": "^19.2.4",
     "react-router-dom": "^7.13.1",
     "react-scripts": "5.0.1",
-    "typescript": "^4.9.5",
-    "web-vitals": "^2.1.4"
+    "typescript": "^4.9.5"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "playwright:test": "playwright test",
+    "playwright:report": "playwright show-report",
+    "playwright:headed": "playwright test --headed"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
+    ],
+    "overrides": [
+      {
+        "files": ["e2e/**/*.ts"],
+        "rules": {
+          "testing-library/prefer-screen-queries": "off"
+        }
+      }
     ]
   },
   "browserslist": {
@@ -43,6 +53,7 @@
     ]
   },
   "devDependencies": {
+    "@playwright/test": "^1.58.2",
     "@types/react-router-dom": "^5.3.3",
     "autoprefixer": "^10.4.27",
     "postcss": "^8.5.8",
